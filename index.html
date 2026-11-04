@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade 8 Mathematics Unit 3 Interactive Assessment</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;700&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans Ethiopic', sans-serif;
+      background-color: #f1f5f9;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP HEADER & TIMER -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/95">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200 font-bold text-lg">
+          <i class="fa-solid fa-square-root-variable"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Grade 8 Mathematics Assessment</h1>
+          <p class="text-xs text-slate-500">Unit 3: Linear Equations &amp; Inequalities (65 Items)</p>
+        </div>
+      </div>
+
+      <!-- Live Header Timer & Status -->
+      <div class="flex items-center gap-3">
+        <div id="narratorControl" class="hidden sm:flex items-center bg-slate-100 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-700 border border-slate-200">
+          <button id="toggleAudioBtn" onclick="toggleAudioMute()" class="flex items-center gap-1.5 hover:text-indigo-600 transition" title="Toggle British Narrator">
+            <i id="narratorIcon" class="fa-solid fa-volume-high text-indigo-600"></i>
+            <span id="narratorLabel">British Narrator Active</span>
+          </button>
+        </div>
+        <!-- Required Timer element & styling -->
+        <div id="timer" style="text-align: right; font-weight: bold; color: #e74c3c; padding: 10px;" class="bg-red-50 border border-red-200 rounded-lg text-sm sm:text-base">
+          Time: 90m 00s
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow">
+
+    <!-- SCREEN 1: IDENTIFICATION & INSTRUCTIONS -->
+    <div id="introScreen" class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-200/80 p-6 sm:p-10 transition-all">
+      <div class="text-center mb-8">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 bg-indigo-50 rounded-full mb-3">Ministry of Education Curriculum</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Examinee Registration</h2>
+        <p class="text-sm text-slate-600 mt-2">Please complete your identification credentials before accessing the assessment.</p>
+      </div>
+
+      <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-6 text-sm text-amber-900 space-y-1">
+        <div class="font-bold flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Assessment Rules:</div>
+        <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm">
+          <li><strong>Total items:</strong> 65 questions across 4 comprehensive parts.</li>
+          <li><strong>Instant feedback:</strong> Each submitted answer locks permanently and provides bilingual solutions.</li>
+          <li><strong>Audio narration:</strong> English questions are narrated with a British voice automatically.</li>
+          <li><strong>Single Submission:</strong> Once finalized, scores will be auto-locked and sent to <code>mesayferedegn2@gmail.com</code>.</li>
+        </ul>
+      </div>
+
+      <form id="idForm" onsubmit="startAssessment(event)" class="space-y-5">
+        <div>
+          <label for="fullName" class="block text-sm font-semibold text-slate-700 mb-1">Full Student Name <span class="text-rose-500">*</span></label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+              <i class="fa-regular fa-user"></i>
+            </span>
+            <input type="text" id="fullName" required placeholder="e.g. Abebe Kebede Tadesse" 
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="studentId" class="block text-sm font-semibold text-slate-700 mb-1">Student ID Number <span class="text-rose-500">*</span></label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                <i class="fa-regular fa-id-badge"></i>
+              </span>
+              <input type="text" id="studentId" required placeholder="e.g. STU-8924" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
+            </div>
+          </div>
+          <div>
+            <label for="section" class="block text-sm font-semibold text-slate-700 mb-1">Grade &amp; Section <span class="text-rose-500">*</span></label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </span>
+              <input type="text" id="section" required placeholder="e.g. Grade 8 - Section B" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm transition">
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" id="startBtn" class="w-full py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-bold text-base shadow-lg shadow-indigo-300 transition flex items-center justify-center gap-2">
+            <span>Start Assessment</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SCREEN 2: ACTIVE ASSESSMENT -->
+    <div id="quizScreen" class="hidden">
+      <!-- Progress Bar & Quick Stats -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm font-semibold text-slate-600 mb-2">
+          <div class="flex items-center gap-2">
+            <span id="studentDisplay" class="text-slate-900 font-bold"></span>
+            <span class="hidden md:inline text-slate-300">|</span>
+            <span id="sectionDisplay" class="text-slate-500 font-medium"></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+              Score: <span id="currentScore" class="font-bold">0</span> / 65
+            </div>
+            <div class="text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200">
+              Answered: <span id="answeredCount" class="font-bold">0</span> / 65
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual Progress Tracker -->
+        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+          <div id="progressBar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 1.5%"></div>
+        </div>
+
+        <!-- Section Categorizer Badges -->
+        <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-100 text-xs font-medium">
+          <span class="text-slate-400 self-center">Categories:</span>
+          <button onclick="jumpToCategory(0)" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Part I: Blanks (1-10)</button>
+          <button onclick="jumpToCategory(10)" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Part II: T/F (11-15)</button>
+          <button onclick="jumpToCategory(15)" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Part III: Odd-One (16-20)</button>
+          <button onclick="jumpToCategory(20)" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 transition">Part IV: MCQ (21-65)</button>
+        </div>
+      </div>
+
+      <!-- Question Card Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Question View (Left 3 columns) -->
+        <div class="lg:col-span-3 space-y-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 relative transition-all">
+            
+            <!-- Category and Question Badge -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+              <div class="flex items-center gap-2">
+                <span id="partBadge" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-indigo-100 text-indigo-800">
+                  PART IV: MULTIPLE CHOICE
+                </span>
+                <span id="questionNumBadge" class="text-xs font-bold text-slate-400">
+                  Question 1 of 65
+                </span>
+              </div>
+              <button onclick="narrateCurrentQuestion()" class="flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition" title="Listen with British Accent">
+                <i class="fa-solid fa-headphones"></i> Listen Narrator
+              </button>
+            </div>
+
+            <!-- Question Text -->
+            <div id="questionText" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-6">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Options / Input Area (Rendered dynamically) -->
+            <div id="optionsContainer" class="space-y-3 mb-6">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Instant Feedback Accordion -->
+            <div id="feedbackBox" class="hidden rounded-xl border p-5 transition-all duration-300">
+              <div class="flex items-center gap-2 font-bold mb-2" id="feedbackHeader">
+                <!-- Status icon and text -->
+              </div>
+              <div class="text-sm space-y-3">
+                <div class="bg-white/80 p-3 rounded-lg border border-slate-200/60">
+                  <span class="font-bold text-slate-800 flex items-center gap-1.5 text-xs uppercase tracking-wide">
+                    <i class="fa-solid fa-flag-checkered text-emerald-600"></i> Correct Answer:
+                  </span>
+                  <p id="correctAnswerText" class="text-slate-900 font-semibold mt-0.5 text-base"></p>
+                </div>
+
+                <!-- Dual Explanations (English & Amharic) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                  <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-indigo-700 flex items-center gap-1.5 mb-1.5">
+                      <i class="fa-solid fa-earth-americas"></i> English Explanation
+                    </h5>
+                    <p id="explanationEn" class="text-slate-700 text-xs sm:text-sm leading-relaxed"></p>
+                  </div>
+                  <div class="bg-amber-50/70 p-3.5 rounded-lg border border-amber-200/80">
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5 mb-1.5">
+                      <i class="fa-solid fa-language"></i> ማብራሪያ (Amharic Explanation)
+                    </h5>
+                    <p id="explanationAm" class="text-amber-950 text-xs sm:text-sm leading-relaxed font-normal"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Navigation Controls (Back, Skip/Next, Final Submit) -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-slate-100 mt-6">
+              <button id="backBtn" onclick="navPrev()" class="px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back</span>
+              </button>
+
+              <div class="flex items-center gap-3">
+                <button id="skipBtn" onclick="navNext()" class="px-5 py-2.5 rounded-xl border border-indigo-200 text-indigo-700 bg-indigo-50/60 hover:bg-indigo-100 font-semibold text-sm transition flex items-center gap-2">
+                  <span>Jump Next / Skip</span>
+                  <i class="fa-solid fa-forward-step"></i>
+                </button>
+
+                <button id="finalSubmitPromptBtn" onclick="trySubmitQuiz()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md shadow-emerald-200 transition flex items-center gap-2">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>Submit Quiz</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Sidebar / Question Grid Drawer (Right 1 column) -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sticky top-20">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide">Question Navigator</h3>
+              <span class="text-xs text-slate-400 font-medium">1 – 65</span>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-slate-500 mb-3 px-1">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Correct</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> Wrong</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-200 inline-block"></span> Pending</span>
+            </div>
+
+            <!-- Scrollable 65-Item Grid -->
+            <div id="questionGrid" class="grid grid-cols-5 gap-2 max-h-[380px] overflow-y-auto custom-scroll pr-1 py-1">
+              <!-- Dynamically populated 1 to 65 -->
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100">
+              <div class="text-xs text-slate-500 text-center">
+                Questions lock once answered. Click any number to jump.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCREEN 3: RESULTS & TEACHER DASHBOARD -->
+    <div id="resultScreen" class="hidden max-w-4xl mx-auto space-y-6">
+      
+      <!-- Score Banner -->
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+        <div id="scoreBannerGrad" class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-purple-600 p-8 text-white text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 backdrop-blur-md mb-3 text-2xl">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold">Assessment Evaluation Complete</h2>
+          <p class="text-indigo-100 text-sm mt-1">Official Result Certificate • Unit 3: Linear Equations and Inequalities</p>
+        </div>
+
+        <div class="p-6 sm:p-8">
+          <!-- Student Details & Key Metrics -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-semibold uppercase">Student Name</div>
+              <div id="resFullName" class="font-extrabold text-slate-800 text-base mt-1 truncate"></div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-center">
+              <div class="text-xs text-slate-500 font-semibold uppercase">ID &amp; Section</div>
+              <div id="resStudentMeta" class="font-extrabold text-slate-800 text-sm mt-1 truncate"></div>
+            </div>
+            <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 text-center">
+              <div class="text-xs text-indigo-600 font-semibold uppercase">Final Score</div>
+              <div class="font-black text-indigo-700 text-2xl mt-0.5"><span id="resScore">0</span> / 65</div>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-4 text-center">
+              <div class="text-xs text-emerald-600 font-semibold uppercase">Percentage &amp; Grade</div>
+              <div class="font-black text-emerald-700 text-2xl mt-0.5" id="resPercentage">0%</div>
+            </div>
+          </div>
+
+          <!-- Section Breakdown Cards -->
+          <div class="border-t border-slate-200 pt-6 mb-6">
+            <h4 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-chart-pie text-indigo-600"></i> Performance Breakdown by Category
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-center">
+                <span class="text-xs text-slate-500 font-medium">Part I: Blanks</span>
+                <p id="breakdownP1" class="font-bold text-slate-800 text-base mt-0.5">0 / 10</p>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-center">
+                <span class="text-xs text-slate-500 font-medium">Part II: True/False</span>
+                <p id="breakdownP2" class="font-bold text-slate-800 text-base mt-0.5">0 / 5</p>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-center">
+                <span class="text-xs text-slate-500 font-medium">Part III: Odd One</span>
+                <p id="breakdownP3" class="font-bold text-slate-800 text-base mt-0.5">0 / 5</p>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 text-center">
+                <span class="text-xs text-slate-500 font-medium">Part IV: MCQ</span>
+                <p id="breakdownP4" class="font-bold text-slate-800 text-base mt-0.5">0 / 45</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEACHER NOTIFICATION & SUBMISSION DISPATCH -->
+          <div class="bg-gradient-to-br from-indigo-50 to-slate-100 rounded-2xl p-6 border border-indigo-100 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-lg">
+                <i class="fa-regular fa-paper-plane"></i>
+              </div>
+              <div>
+                <h4 class="text-base font-bold text-slate-900">Official Teacher Submission Dispatch</h4>
+                <p class="text-xs text-slate-600">Send verified score report to instructor: <strong class="text-indigo-800">mesayferedegn2@gmail.com</strong></p>
+              </div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div id="emailLockedNotice" class="hidden bg-emerald-100 border border-emerald-300 text-emerald-800 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2">
+              <i class="fa-solid fa-lock"></i>
+              <span>Assessment officially recorded and locked! Resubmissions are restricted.</span>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex flex-wrap items-center gap-3 pt-2">
+              <button id="sendEmailBtn" onclick="sendScoreEmail()" class="flex-1 min-w-[220px] py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-bold text-sm shadow-md shadow-indigo-300 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Send Score via Email (mesayferedegn2@gmail.com)</span>
+              </button>
+
+              <button onclick="copyResultsSummary()" class="py-3.5 px-5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition flex items-center justify-center gap-2">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copyBtnText">Copy Report</span>
+              </button>
+            </div>
+            <textarea id="hiddenReportBuffer" class="sr-only" readonly></textarea>
+          </div>
+
+          <!-- Review Answers Accordion Button -->
+          <div class="mt-8 text-center">
+            <button onclick="toggleAuditLog()" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-semibold text-sm transition">
+              <i class="fa-solid fa-list-check"></i>
+              <span id="auditToggleLabel">View Full 65-Item Audit Log &amp; Detailed Solutions</span>
+            </button>
+          </div>
+
+          <!-- Collapsible 65-item answer audit table -->
+          <div id="auditLogContainer" class="hidden mt-6 space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2 border-t border-slate-200 pt-4">
+            <!-- Rendered by JS -->
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- CUSTOM MODAL DIALOG (Replaces alert/confirm) -->
+  <div id="customModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 transform transition-all">
+      <div id="modalIconWrap" class="w-12 h-12 rounded-full flex items-center justify-center text-xl mb-4 bg-amber-100 text-amber-600">
+        <i id="modalIcon" class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 id="modalTitle" class="text-lg font-bold text-slate-900 mb-2">Notice</h3>
+      <p id="modalMessage" class="text-sm text-slate-600 leading-relaxed mb-6"></p>
+      <div class="flex items-center justify-end gap-3" id="modalButtons">
+        <button id="modalSecondaryBtn" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-sm font-semibold transition">Cancel</button>
+        <button id="modalPrimaryBtn" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold shadow-md transition">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>Ethiopian Educational Framework • Grade 8 Mathematics Unit 3 Assessment</div>
+      <div>Designed with Tailwind CSS • Auto-Grading &amp; Bilingual Feedback</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    /* =========================================================================
+       1. DATA STRUCTURE: 65 COMPLETE ITEMS FROM THE PROVIDED CURRICULUM
+       ========================================================================= */
+    const quizData = [
+      // ----------------- PART I: FILL IN THE BLANKS (1-10) -----------------
+      {
+        id: 1,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "The two intersecting perpendicular number lines in a Cartesian coordinate system meet at a fixed point called the ____________________.",
+        options: ["Origin", "Abscissa", "Slope", "Vertex"],
+        correct: "Origin",
+        explanationEn: "The point (0, 0) where the horizontal x-axis and vertical y-axis intersect is universally called the origin.",
+        explanationAm: "በካርቴዥያል መጋጠሚያ ስርዓት ውስጥ አግድም እና ቋሚ መስመሮች የሚገናኙበት ቋሚ ነጥብ (0, 0) መነሻ ነጥብ (Origin) ይባላል።"
+      },
+      {
+        id: 2,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "In any ordered pair (x, y), the horizontal coordinate x is known as the ____________________, whereas the vertical coordinate y is called the ordinate.",
+        options: ["Abscissa", "Slope", "Intercept", "Origin"],
+        correct: "Abscissa",
+        explanationEn: "In an ordered pair (x, y), the first coordinate x is specifically called the abscissa, and y is the ordinate.",
+        explanationAm: "በተጣመረ ጥንድ (x, y) ውስጥ አግድም መጋጠሚያ x አብሲሳ (Abscissa) ሲባል፣ ቋሚ መጋጠሚያ y ደግሞ ኦርዲኔት (Ordinate) ይባላል።"
+      },
+      {
+        id: 3,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "The equation representing the horizontal x-axis in the Cartesian plane is ____________________.",
+        options: ["y = 0", "x = 0", "y = x", "x = 1"],
+        correct: "y = 0",
+        explanationEn: "Every point located anywhere on the horizontal x-axis has a vertical height (y-coordinate) of zero, hence its equation is y = 0.",
+        explanationAm: "በካርቴዥያል ሜዳ ላይ ባለው አግድም የ x-ዘንግ ላይ ያለ ማንኛውም ነጥብ የ y ዋጋው ዜሮ (0) ስለሆነ፣ እኩልታው y = 0 ነው።"
+      },
+      {
+        id: 4,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "The graph of an equation of the form x = a (where a is a constant) is a ____________________ line that is parallel to the y-axis.",
+        options: ["Vertical", "Horizontal", "Slanted", "Curved"],
+        correct: "Vertical",
+        explanationEn: "For x = a, the value of x is fixed for all real values of y, constructing a vertical line parallel to the y-axis.",
+        explanationAm: "x = a ቅርጽ ያለው እኩልታ ግራፍ ሁልጊዜ ከ y-ዘንግ ጋር ትይዩ የሆነ ቋሚ (Vertical) ቀጥተኛ መስመር ነው።"
+      },
+      {
+        id: 5,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "The graph of any linear equation of the form y = mx (where m ∈ Q and m ≠ 0) always passes through the ____________________.",
+        options: ["Origin (0, 0)", "(1, 1)", "(0, 1)", "(1, 0)"],
+        correct: "Origin (0, 0)",
+        explanationEn: "When x = 0 is substituted into y = mx, y = m(0) = 0. Therefore, the ordered pair (0, 0) satisfies the equation.",
+        explanationAm: "በ y = mx እኩልታ ውስጥ x = 0 ሲተካ y = 0 ስለሚሆን፣ ግራፉ ሁልጊዜ በመነሻ ነጥብ (Origin) (0, 0) በኩል ያልፋል።"
+      },
+      {
+        id: 6,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "If the slope m in the equation y = mx is strictly negative (m < 0), its line passes through Quadrants ____________________ and ____________________.",
+        options: ["II and IV", "I and III", "I and II", "III and IV"],
+        correct: "II and IV",
+        explanationEn: "When m < 0: if x > 0, then y < 0 (Quadrant IV); if x < 0, then y > 0 (Quadrant II).",
+        explanationAm: "የመስመሩ ቅልጠት m ከአሉታዊ (m < 0) ከሆነ፣ ግራፉ የሚያልፈው በክፍለ-ሜዳ II እና IV (Quadrant II & IV) ውስጥ ነው።"
+      },
+      {
+        id: 7,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "A mathematical sentence containing one of the relation signs <, >, ≤, ≥, or ≠ is known as an ____________________.",
+        options: ["Inequality", "Equation", "Expression", "Identity"],
+        correct: "Inequality",
+        explanationEn: "Any mathematical statement formed with relation symbols other than equality (=) is strictly termed an inequality.",
+        explanationAm: "የንፅፅር ምልክቶችን (<, >, ≤, ≥, ወይም ≠) የያዘ የሂሳብ አረፍተ-ነገር ኢ-እኩልነት (Inequality) ተብሎ ይጠራል።"
+      },
+      {
+        id: 8,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "Two linear inequalities that have exactly the same solution set are defined as ____________________ inequalities.",
+        options: ["Equivalent", "Opposite", "Reciprocal", "Inverse"],
+        correct: "Equivalent",
+        explanationEn: "By mathematical definition, inequalities sharing the exact same solution sets across their domain are equivalent.",
+        explanationAm: "ተመሳሳይ የመፍትሄ ስብስብ ያላቸው ሁለት መስመራዊ ኢ-እኩልነቶች እኩል-ዋጋ (Equivalent) ኢ-እኩልነቶች ይባላሉ።"
+      },
+      {
+        id: 9,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "When both sides of an inequality are multiplied or divided by any negative rational number, the direction of the inequality sign is ____________________.",
+        options: ["Reversed", "Unchanged", "Preserved", "Doubled"],
+        correct: "Reversed",
+        explanationEn: "Multiplying or dividing an inequality by a negative value inverts order relations (e.g., -2 < 4 becomes 2 > -4), reversing the sign.",
+        explanationAm: "የኢ-እኩልነት ሁለቱም ወገኖች በአሉታዊ ቁጥር ሲባዙ ወይም ሲካፈሉ፣ የኢ-እኩልነት ምልክቱ አቅጣጫ ይቀለበሳል (Reversed)።"
+      },
+      {
+        id: 10,
+        part: "PART I: FILL IN THE BLANKS",
+        type: "fill",
+        question: "In the linear equation y = mx + c, the graph intersects the vertical y-axis at the point with coordinates (0, ________).",
+        options: ["c", "m", "0", "-c"],
+        correct: "c",
+        explanationEn: "Setting x = 0 in y = mx + c gives y = m(0) + c = c, so the y-intercept is precisely (0, c).",
+        explanationAm: "በ y = mx + c እኩልታ ውስጥ x = 0 ሲሆን፣ y = c ስለሚሆን መስመሩ የ y-ዘንግን የሚቆርጠው በ (0, c) ላይ ነው።"
+      },
+
+      // ----------------- PART II: TRUE OR FALSE (11-15) -----------------
+      {
+        id: 11,
+        part: "PART II: TRUE OR FALSE",
+        type: "tf",
+        question: "The point P(-4, -7) lies in Quadrant III of the Cartesian coordinate plane.",
+        options: ["TRUE", "FALSE"],
+        correct: "TRUE",
+        explanationEn: "In Quadrant III, both coordinates are strictly negative: x = -4 < 0 and y = -7 < 0.",
+        explanationAm: "በክፍለ-ሜዳ III (Quadrant III) ሁለቱም መጋጠሚያዎች አሉታዊ ናቸው። ነጥብ (-4, -7) ሁለቱም አሉታዊ ስለሆኑ እውነት ነው።"
+      },
+      {
+        id: 12,
+        part: "PART II: TRUE OR FALSE",
+        type: "tf",
+        question: "The graph of the equation y = -5 is a vertical line perpendicular to the x-axis.",
+        options: ["TRUE", "FALSE"],
+        correct: "FALSE",
+        explanationEn: "The line y = -5 has constant y-values; it forms a horizontal line parallel to the x-axis, perpendicular to the y-axis.",
+        explanationAm: "y = -5 አግድም መስመር (Horizontal line) ከ x-ዘንግ ጋር ትይዩ እንጂ ቋሚ መስመር ስላልሆነ ሀሰት (FALSE) ነው።"
+      },
+      {
+        id: 13,
+        part: "PART II: TRUE OR FALSE",
+        type: "tf",
+        question: "If both sides of the inequality a < b are multiplied by a positive number c (c > 0), the direction of the inequality remains unchanged.",
+        options: ["TRUE", "FALSE"],
+        correct: "TRUE",
+        explanationEn: "Multiplication by a strictly positive number preserves order magnitude, keeping the inequality sign unchanged.",
+        explanationAm: "አንድን ኢ-እኩልነት በአዎንታዊ ቁጥር (c > 0) ስናባዛ የምልክቱ አቅጣጫ አይለወጥም፤ ስለዚህ እውነት (TRUE) ነው።"
+      },
+      {
+        id: 14,
+        part: "PART II: TRUE OR FALSE",
+        type: "tf",
+        question: "The graph of the linear equation y = -3x passes through Quadrants II and IV.",
+        options: ["TRUE", "FALSE"],
+        correct: "TRUE",
+        explanationEn: "Since slope m = -3 < 0, positive x produces negative y (Quadrant IV) and negative x produces positive y (Quadrant II).",
+        explanationAm: "የመስመሩ ቅልጠት አሉታዊ (-3) ስለሆነ፣ መስመሩ የሚያልፈው በክፍለ-ሜዳ II እና IV ውስጥ በመሆኑ እውነት (TRUE) ነው።"
+      },
+      {
+        id: 15,
+        part: "PART II: TRUE OR FALSE",
+        type: "tf",
+        question: "The linear inequality 2x + 1 < 2x - 4 has an infinite number of solutions in the set of rational numbers Q.",
+        options: ["TRUE", "FALSE"],
+        correct: "FALSE",
+        explanationEn: "Subtracting 2x from both sides results in 1 < -4, which is an impossible contradiction. The solution set is empty.",
+        explanationAm: "ከሁለቱም ወገን 2x ስንቀንስ 1 < -4 የሚል የማይቻል ሀሰት እናገኛለን። መፍትሄ ስለሌለው (Empty set) አረፍተ ነገሩ ሀሰት (FALSE) ነው።"
+      },
+
+      // ----------------- PART III: WORD-OUT (ODD ONE OUT) (16-20) -----------------
+      {
+        id: 16,
+        part: "PART III: WORD-OUT (ODD ONE OUT)",
+        type: "odd",
+        question: "Identify the item that does NOT belong with the others based on Unit 3 concepts: Set: A. Quadrant I | B. Quadrant II | C. Origin | D. Quadrant IV",
+        options: ["A. Quadrant I", "B. Quadrant II", "C. Origin", "D. Quadrant IV"],
+        correct: "C. Origin",
+        explanationEn: "Origin is a singular zero-dimensional point (0, 0), whereas Quadrants I, II, and IV are two-dimensional regions of the Cartesian plane.",
+        explanationAm: "መነሻ ነጥብ (Origin) ነጠላ ነጥብ (0, 0) ሲሆን፤ ክፍለ-ሜዳዎች (Quadrants) ግን የሜዳው ሰፋፊ ክፍሎች ናቸው። ስለዚህ ለየት የሚለው C ነው።"
+      },
+      {
+        id: 17,
+        part: "PART III: WORD-OUT (ODD ONE OUT)",
+        type: "odd",
+        question: "Identify the item that does NOT belong: Set: A. x = 3 | B. x = -5 | C. y = 4 | D. x = 0",
+        options: ["A. x = 3", "B. x = -5", "C. y = 4", "D. x = 0"],
+        correct: "C. y = 4",
+        explanationEn: "y = 4 is a horizontal line parallel to the x-axis, whereas x = 3, x = -5, and x = 0 are all vertical lines parallel/coincident to the y-axis.",
+        explanationAm: "y = 4 አግድም መስመር (Horizontal line) ሲሆን፤ የተቀሩት ሦስቱ ግን ቋሚ መስመሮች (Vertical lines) ናቸው። ስለዚህ ለየት የሚለው C ነው።"
+      },
+      {
+        id: 18,
+        part: "PART III: WORD-OUT (ODD ONE OUT)",
+        type: "odd",
+        question: "Identify the item that does NOT belong: Set: A. y = 2x | B. y = -5x | C. y = (1/3)x | D. y = 3x + 4",
+        options: ["A. y = 2x", "B. y = -5x", "C. y = (1/3)x", "D. y = 3x + 4"],
+        correct: "D. y = 3x + 4",
+        explanationEn: "y = 3x + 4 has a non-zero y-intercept (0, 4) and does not pass through the origin, whereas the other three are lines of form y = mx passing through (0, 0).",
+        explanationAm: "y = 3x + 4 መነሻ ነጥብን (0, 0) አያቋርጥም (ቋሚ ቁጥር 4 አለው)፤ የተቀሩት ግን በመነሻ ነጥብ የሚያልፉ የ y = mx ቅርጾች ናቸው።"
+      },
+      {
+        id: 19,
+        part: "PART III: WORD-OUT (ODD ONE OUT)",
+        type: "odd",
+        question: "Identify the item that does NOT belong: Set: A. < (less than) | B. > (greater than) | C. = (equal to) | D. ≤ (less than or equal to)",
+        options: ["A. < (less than)", "B. > (greater than)", "C. = (equal to)", "D. ≤ (less than or equal to)"],
+        correct: "C. = (equal to)",
+        explanationEn: "The equal sign (=) establishes an equality/equation, while <, >, and ≤ are relation symbols forming inequalities.",
+        explanationAm: "የእኩል ይሆናል (=) ምልክት የእኩልታ (Equation) ሲሆን፤ የተቀሩት ሦስቱ የኢ-እኩልነት (Inequality) ምልክቶች ናቸው።"
+      },
+      {
+        id: 20,
+        part: "PART III: WORD-OUT (ODD ONE OUT)",
+        type: "odd",
+        question: "Identify the point that does NOT belong: Set: A. (-3, 5) | B. (-1, 8) | C. (-7, -2) | D. (-4, 2)",
+        options: ["A. (-3, 5)", "B. (-1, 8)", "C. (-7, -2)", "D. (-4, 2)"],
+        correct: "C. (-7, -2)",
+        explanationEn: "Point (-7, -2) is in Quadrant III with signs (-, -), whereas points A, B, and D all lie in Quadrant II with signs (-, +).",
+        explanationAm: "ነጥብ (-7, -2) በክፍለ-ሜዳ III ውስጥ ይገኛል (-, -)፤ የተቀሩት ሦስቱ ነጥቦች ግን በሙሉ በክፍለ-ሜዳ II (-, +) ውስጥ የሚገኙ ናቸው።"
+      },
+
+      // ----------------- PART IV: MULTIPLE CHOICE (21-65) -----------------
+      {
+        id: 21,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "1. What is the common intersection point of the horizontal x-axis and the vertical y-axis in a Cartesian plane called?",
+        options: ["(A) Origin", "(B) Abscissa", "(C) Ordinate", "(D) Quadrant"],
+        correct: "(A) Origin",
+        explanationEn: "The intersecting point of the perpendicular reference axes (0, 0) is known as the origin.",
+        explanationAm: "በካርቴዥያል ሜዳ ላይ የ x-ዘንግ እና የ y-ዘንግ የሚገናኙበት ነጥብ መነሻ (Origin) ይባላል።"
+      },
+      {
+        id: 22,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "2. In an ordered pair (x, y), what is the specific mathematical term for the first coordinate, x?",
+        options: ["(A) Slope", "(B) Abscissa", "(C) Ordinate", "(D) Constant"],
+        correct: "(B) Abscissa",
+        explanationEn: "The first value x is termed the abscissa, while y is the ordinate.",
+        explanationAm: "በተጣመረ ጥንድ (x, y) ውስጥ የመጀመሪያው መጋጠሚያ x አብሲሳ (Abscissa) ተብሎ ይጠራል።"
+      },
+      {
+        id: 23,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "3. In which quadrant of the Cartesian coordinate plane are both coordinates negative, i.e., x < 0 and y < 0?",
+        options: ["(A) Quadrant I", "(B) Quadrant II", "(C) Quadrant III", "(D) Quadrant IV"],
+        correct: "(C) Quadrant III",
+        explanationEn: "Quadrant III contains points where both coordinates are strictly negative: (-, -).",
+        explanationAm: "በክፍለ-ሜዳ III (Quadrant III) ውስጥ ሁለቱም መጋጠሚያዎች አሉታዊ ናቸው (x < 0 እና y < 0)።"
+      },
+      {
+        id: 24,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "4. The point P(4, -7) is located in which quadrant of the Cartesian plane?",
+        options: ["(A) Quadrant I", "(B) Quadrant II", "(C) Quadrant III", "(D) Quadrant IV"],
+        correct: "(D) Quadrant IV",
+        explanationEn: "x = 4 > 0 and y = -7 < 0, which corresponds to the sign signature (+, -) of Quadrant IV.",
+        explanationAm: "x አዎንታዊ (4) እና y አሉታዊ (-7) በመሆናቸው ነጥቡ በክፍለ-ሜዳ IV (Quadrant IV) ውስጥ ይገኛል።"
+      },
+      {
+        id: 25,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "5. Where is the point with coordinates (-6, 0) situated on the Cartesian plane?",
+        options: ["(A) On the negative x-axis", "(B) On the positive y-axis", "(C) In Quadrant II", "(D) In Quadrant III"],
+        correct: "(A) On the negative x-axis",
+        explanationEn: "Since y = 0 and x is negative (-6), the point lies directly on the negative horizontal x-axis.",
+        explanationAm: "y = 0 እና x = -6 ስለሆነ ነጥቡ የሚገኘው በቀጥታ በአሉታዊው የ x-ዘንግ ላይ (On the negative x-axis) ነው።"
+      },
+      {
+        id: 26,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "6. What is the equation of the vertical line that passes through the point P(-3, 5)?",
+        options: ["(A) y = 5", "(B) x = -3", "(C) y = -3", "(D) x = 5"],
+        correct: "(B) x = -3",
+        explanationEn: "A vertical line passing through (a, b) maintains a constant x-value of a. Therefore, x = -3.",
+        explanationAm: "በነጥብ (-3, 5) የሚያልፍ ቋሚ መስመር እኩልታ ሁልጊዜ x = -3 ነው።"
+      },
+      {
+        id: 27,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "7. Which of the following is the equation representing the horizontal x-axis itself?",
+        options: ["(A) x = 1", "(B) x = 0", "(C) y = 0", "(D) y = x"],
+        correct: "(C) y = 0",
+        explanationEn: "All points on the horizontal x-axis have a y-coordinate equal to 0, forming the equation y = 0.",
+        explanationAm: "በ x-ዘንግ ላይ ያለ ማንኛውም ነጥብ የ y ዋጋው ዜሮ በመሆኑ የ x-ዘንግ እኩልታ y = 0 ነው።"
+      },
+      {
+        id: 28,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "8. Which statement correctly describes the graph of the equation y = 4?",
+        options: [
+          "(A) It is a vertical line parallel to the y-axis.",
+          "(B) It is a line passing through the origin (0, 0).",
+          "(C) It is a line passing through Quadrants II and IV only.",
+          "(D) It is a horizontal line parallel to the x-axis."
+        ],
+        correct: "(D) It is a horizontal line parallel to the x-axis.",
+        explanationEn: "Equations of form y = k represent straight horizontal lines parallel to the x-axis at distance k.",
+        explanationAm: "y = 4 ከ x-ዘንግ ጋር ትይዩ የሆነ አግድም መስመር (Horizontal line) ነው።"
+      },
+      {
+        id: 29,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "9. For any non-zero rational number m, the graph of the linear equation y = mx always passes through which point?",
+        options: ["(A) (0, 0)", "(B) (1, 0)", "(C) (0, 1)", "(D) (1, 1)"],
+        correct: "(A) (0, 0)",
+        explanationEn: "Substituting x = 0 gives y = m(0) = 0; thus (0, 0) is always on the line.",
+        explanationAm: "ለማንኛውም m ቁጥር x = 0 ሲሆን y = 0 ስለሚሆን መስመሩ ሁልጊዜ በመነሻ ነጥብ (0, 0) ያልፋል።"
+      },
+      {
+        id: 30,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "10. If m > 0 in the linear equation y = mx, through which quadrants does its straight-line graph pass?",
+        options: ["(A) Quadrants II and IV", "(B) Quadrants I and III", "(C) Quadrants I and II", "(D) Quadrants III and IV"],
+        correct: "(B) Quadrants I and III",
+        explanationEn: "With positive slope m > 0, positive x gives positive y (Quadrant I), and negative x gives negative y (Quadrant III).",
+        explanationAm: "m > 0 ሲሆን አዎንታዊ x አዎንታዊ y (I) እንዲሁም አሉታዊ x አሉታዊ y (III) ስለሚሰጥ በክፍለ-ሜዳ I እና III ያልፋል።"
+      },
+      {
+        id: 31,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "11. If m < 0 in the equation y = mx, through which quadrants does the line pass?",
+        options: ["(A) Quadrants I and II", "(B) Quadrants I and III", "(C) Quadrants II and IV", "(D) Quadrants II and III"],
+        correct: "(C) Quadrants II and IV",
+        explanationEn: "With negative slope m < 0, positive x gives negative y (Quadrant IV), and negative x gives positive y (Quadrant II).",
+        explanationAm: "m < 0 ሲሆን መስመሩ የሚያልፈው በክፍለ-ሜዳ II እና IV ውስጥ ነው።"
+      },
+      {
+        id: 32,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "12. If the point (k, 12) lies on the line given by y = 4x, what is the value of k?",
+        options: ["(A) 48", "(B) 8", "(C) -3", "(D) 3"],
+        correct: "(D) 3",
+        explanationEn: "Substitute y = 12 and x = k: 12 = 4k => k = 12 / 4 = 3.",
+        explanationAm: "በ y = 4x ውስጥ y = 12 እና x = k ስንተካ: 12 = 4k => k = 3 ይሆናል።"
+      },
+      {
+        id: 33,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "13. Which of the following ordered pairs is a solution to the linear equation y = 3x - 5?",
+        options: ["(A) (2, 1)", "(B) (1, 2)", "(C) (0, 5)", "(D) (-1, -2)"],
+        correct: "(A) (2, 1)",
+        explanationEn: "Testing (2, 1): 3(2) - 5 = 6 - 5 = 1. The point satisfies the equation.",
+        explanationAm: "ነጥብ (2, 1) ስንተካ፡ 3(2) - 5 = 6 - 5 = 1 ስለሚሆን እኩልታውን በትክክል ያሟላል።"
+      },
+      {
+        id: 34,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "14. What is the y-intercept of the line represented by the equation y = -2x + 7?",
+        options: ["(A) -2", "(B) 7", "(C) -7", "(D) 3.5"],
+        correct: "(B) 7",
+        explanationEn: "In the slope-intercept form y = mx + c, c is the y-intercept, which is 7.",
+        explanationAm: "በ y = mx + c ቅርጽ c የ y-ቆራጭ (y-intercept) ሲሆን፣ በዚህ እኩልታ ውስጥ c = 7 ነው።"
+      },
+      {
+        id: 35,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "15. At what point does the graph of the linear equation 2y - 4x = 6 cross the y-axis?",
+        options: ["(A) (0, -3)", "(B) (-1.5, 0)", "(C) (0, 3)", "(D) (3, 0)"],
+        correct: "(C) (0, 3)",
+        explanationEn: "Set x = 0: 2y - 4(0) = 6 => 2y = 6 => y = 3. The coordinate is (0, 3).",
+        explanationAm: "የ y-ዘንግን ለመቁረጥ x = 0 ይሆናል: 2y - 0 = 6 => y = 3። መጋጠሚያው (0, 3) ነው።"
+      },
+      {
+        id: 36,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "16. If the point P(a, 3) lies on the line given by 12x - 2y = 0, what is the value of a?",
+        options: ["(A) 2", "(B) 6", "(C) 0.25", "(D) 0.5"],
+        correct: "(D) 0.5",
+        explanationEn: "Substitute y = 3 and x = a: 12a - 2(3) = 0 => 12a = 6 => a = 6/12 = 0.5.",
+        explanationAm: "በእኩልታው ውስጥ y = 3 ስንተካ፡ 12a - 6 = 0 => 12a = 6 => a = 6/12 = 0.5 ይሆናል።"
+      },
+      {
+        id: 37,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "17. Which of the following is a linear inequality in one variable?",
+        options: ["(A) 5x - 4 <= 11", "(B) x^2 + 3 > 7", "(C) 2x + 3y < 8", "(D) 4x - 1 = 9"],
+        correct: "(A) 5x - 4 <= 11",
+        explanationEn: "5x - 4 <= 11 has only one variable (x) raised to the first power and uses an inequality symbol.",
+        explanationAm: "5x - 4 <= 11 አንድ ተለዋዋጭ (x) ብቻ የያዘ እና መስመራዊ (linear) የሆነ ኢ-እኩልነት ነው።"
+      },
+      {
+        id: 38,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "18. What are two inequalities called if they share exactly the same solution set?",
+        options: ["(A) Inverse inequalities", "(B) Equivalent inequalities", "(C) Opposite inequalities", "(D) Reciprocal inequalities"],
+        correct: "(B) Equivalent inequalities",
+        explanationEn: "Inequalities that have identical solution sets are defined as equivalent inequalities.",
+        explanationAm: "ተመሳሳይ የመፍትሄ ስብስብ ያላቸው ሁለት ኢ-እኩልነቶች እኩል-ዋጋ (Equivalent) ኢ-እኩልነቶች ይባላሉ።"
+      },
+      {
+        id: 39,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "19. What happens to the direction of an inequality symbol when both sides are multiplied or divided by a negative number?",
+        options: ["(A) It remains unchanged.", "(B) It changes to an equal sign.", "(C) It is reversed.", "(D) It becomes undefined."],
+        correct: "(C) It is reversed.",
+        explanationEn: "Rule 3 of inequalities states that multiplying or dividing both sides by a negative number reverses the direction of the inequality sign.",
+        explanationAm: "ኢ-እኩልነት በአሉታዊ ቁጥር ሲባዛ ወይም ሲካፈል የምልክቱ አቅጣጫ ይቀለበሳል (Reversed)።"
+      },
+      {
+        id: 40,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "20. If -3x < 15, what is the solution for x in the domain of rational numbers Q?",
+        options: ["(A) x < -5", "(B) x <= -5", "(C) x > 5", "(D) x > -5"],
+        correct: "(D) x > -5",
+        explanationEn: "Divide by -3 and reverse the inequality sign: x > 15 / (-3) => x > -5.",
+        explanationAm: "ሁለቱንም ወገን በ -3 ስናካፍል ምልክቱ ተገልብጦ x > -5 ይሆናል።"
+      },
+      {
+        id: 41,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "21. Solve the linear inequality: 3x - 7 >= 11 for x in Q.",
+        options: ["(A) x >= 6", "(B) x <= 6", "(C) x >= 18", "(D) x <= 18"],
+        correct: "(A) x >= 6",
+        explanationEn: "Add 7: 3x >= 18. Divide by 3: x >= 6.",
+        explanationAm: "3x >= 11 + 7 => 3x >= 18 => x >= 6 ይሆናል።"
+      },
+      {
+        id: 42,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "22. What is the solution set of 2x + 5 < 13 when the variable x is restricted to the set of Whole numbers W = {0, 1, 2, ...}?",
+        options: ["(A) {0, 1, 2, 3, 4}", "(B) {0, 1, 2, 3}", "(C) {1, 2, 3}", "(D) {..., -1, 0, 1, 2, 3}"],
+        correct: "(B) {0, 1, 2, 3}",
+        explanationEn: "2x < 8 => x < 4. The whole numbers strictly less than 4 are {0, 1, 2, 3}.",
+        explanationAm: "2x < 8 => x < 4። ከ 4 የሚያንሱ ሙሉ ቁጥሮች (Whole numbers) {0, 1, 2, 3} ናቸው።"
+      },
+      {
+        id: 43,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "23. Solve the inequality: x + 4 <= 4x - 8.",
+        options: ["(A) x <= 4", "(B) x >= -4", "(C) x >= 4", "(D) x <= -4"],
+        correct: "(C) x >= 4",
+        explanationEn: "Subtract x and add 8: 4 + 8 <= 4x - x => 12 <= 3x => 4 <= x, which means x >= 4.",
+        explanationAm: "4 + 8 <= 4x - x => 12 <= 3x => 4 <= x፤ ይህም ማለት x >= 4 ማለት ነው።"
+      },
+      {
+        id: 44,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "24. What is the solution set of the inequality 2x < 2x - 5?",
+        options: ["(A) All rational numbers Q", "(B) {0}", "(C) x < -5", "(D) Empty set (no solution)"],
+        correct: "(D) Empty set (no solution)",
+        explanationEn: "Subtracting 2x gives 0 < -5, which is impossible. Therefore, there are no solutions (empty set).",
+        explanationAm: "ከሁለቱም ወገን 2x ስንቀንስ 0 < -5 የሚል የሀሰት አረፍተ-ነገር ይሰጣል፤ ስለዚህ መፍትሄው ባዶ ስብስብ (Empty set) ነው።"
+      },
+      {
+        id: 45,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "25. What is the solution set of the inequality 4x + 6 > 4x + 1?",
+        options: ["(A) All rational numbers Q", "(B) Empty set", "(C) x > 5", "(D) {0}"],
+        correct: "(A) All rational numbers Q",
+        explanationEn: "Subtracting 4x gives 6 > 1, which is always universally true for all x in Q.",
+        explanationAm: "4x ስንቀንስ 6 > 1 እናገኛለን፤ ይህም ሁልጊዜ እውነት ስለሆነ መፍትሄው ሁሉም የምክንያታዊ ቁጥሮች ስብስብ (Q) ነው።"
+      },
+      {
+        id: 46,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "26. Which mathematical inequality corresponds to the phrase: 'The height h is at most 15 meters'?",
+        options: ["(A) h > 15", "(B) h <= 15", "(C) h >= 15", "(D) h < 15"],
+        correct: "(B) h <= 15",
+        explanationEn: "'At most' means less than or equal to (<=). Hence, h <= 15.",
+        explanationAm: "'ከ 15 ሜትር የማይበልጥ / ቢበዛ 15 ሜትር' ማለት ያነሰ ወይም እኩል (<=) ማለት ስለሆነ h <= 15 ነው።"
+      },
+      {
+        id: 47,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "27. Which mathematical inequality translates the phrase: 'The speed v is at least 60 km/h'?",
+        options: ["(A) v > 60", "(B) v < 60", "(C) v >= 60", "(D) v <= 60"],
+        correct: "(C) v >= 60",
+        explanationEn: "'At least' mathematically translates to greater than or equal to (>=). Hence, v >= 60.",
+        explanationAm: "'ቢያንስ 60 ኪ.ሜ/ሰ' የሚለው ሐረግ የሚተረጎመው የሚበልጥ ወይም እኩል (>=) ተብሎ ስለሆነ v >= 60 ይሆናል።"
+      },
+      {
+        id: 48,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "28. Which of the following phrases represents the algebraic inequality 2x - 5 > 9?",
+        options: [
+          "(A) Five more than twice a number is greater than nine.",
+          "(B) Twice a number decreased by nine exceeds five.",
+          "(C) Five less than twice a number is at most nine.",
+          "(D) Five subtracted from twice a number exceeds nine."
+        ],
+        correct: "(D) Five subtracted from twice a number exceeds nine.",
+        explanationEn: "2x is 'twice a number', - 5 is 'five subtracted from', and > 9 means 'exceeds nine'.",
+        explanationAm: "2x - 5 > 9 ማለት 'ከአንድ ቁጥር ሁለት እጥፍ ላይ አምስት ሲቀነስ ከዘጠኝ ይበልጣል' ማለት ነው።"
+      },
+      {
+        id: 49,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "29. Using the temperature conversion formula C = 5/9 * (F - 32), what is F expressed explicitly in terms of C?",
+        options: ["(A) F = (9/5)C + 32", "(B) F = (5/9)C - 32", "(C) F = (9/5)C - 32", "(D) F = (5/9)C + 32"],
+        correct: "(A) F = (9/5)C + 32",
+        explanationEn: "Multiply by 9/5: (9/5)C = F - 32. Add 32: F = (9/5)C + 32.",
+        explanationAm: "ሁለቱንም ወገን በ 9/5 ስናባዛ (9/5)C = F - 32 ይሆናል፤ 32 ስንደምርበት F = (9/5)C + 32 እናገኛለን።"
+      },
+      {
+        id: 50,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "30. If the temperature on the Fahrenheit scale is greater than 50°F (F > 50), what is the corresponding interval on the Celsius scale?",
+        options: ["(A) C > 18", "(B) C > 10", "(C) C < 10", "(D) C > 32"],
+        correct: "(B) C > 10",
+        explanationEn: "C = (5/9)(50 - 32) = (5/9)(18) = 10. Therefore, C > 10.",
+        explanationAm: "C = 5/9 * (50 - 32) = 5/9 * 18 = 10፤ ስለዚህ በሴልሺየስ C > 10 ይሆናል።"
+      },
+      {
+        id: 51,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "31. The sum of the ages of a mother and her daughter is 68 years. If the mother is 22 years older than her daughter, how old is the mother?",
+        options: ["(A) 23 years", "(B) 43 years", "(C) 45 years", "(D) 48 years"],
+        correct: "(C) 45 years",
+        explanationEn: "Let daughter = d; mother = d + 22. d + d + 22 = 68 => 2d = 46 => d = 23. Mother = 23 + 22 = 45 years.",
+        explanationAm: "የሴት ልጅ ዕድሜ d ቢሆን የእናት d + 22 ነው። 2d + 22 = 68 => 2d = 46 => d = 23። የእናት ዕድሜ 23 + 22 = 45 ዓመት ነው።"
+      },
+      {
+        id: 52,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "32. Samuel can complete a job in 15 days, and Saron can complete the same job in 10 days. How many days will they take working together?",
+        options: ["(A) 12.5 days", "(B) 8 days", "(C) 5 days", "(D) 6 days"],
+        correct: "(D) 6 days",
+        explanationEn: "Combined rate = 1/15 + 1/10 = 2/30 + 3/30 = 5/30 = 1/6 job per day. Time = 6 days.",
+        explanationAm: "አንድ ላይ ሲሰሩ፡ 1/15 + 1/10 = 5/30 = 1/6 ስራ በቀን። ስለዚህ ስራውን ለመጨረስ 6 ቀናት ይፈጅባቸዋል።"
+      },
+      {
+        id: 53,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "33. A taxi service charges an initial fee of 50 Birr plus 10 Birr per kilometer. If an individual has a budget of at most 1,350 Birr, what is the maximum distance d (in km) that can be traveled?",
+        options: ["(A) 130 km", "(B) 140 km", "(C) 125 km", "(D) 135 km"],
+        correct: "(A) 130 km",
+        explanationEn: "50 + 10d <= 1350 => 10d <= 1300 => d <= 130 km.",
+        explanationAm: "50 + 10d <= 1350 => 10d <= 1300 => d <= 130 ኪ.ሜ። ቢበዛ መጓዝ የሚችለው 130 ኪ.ሜ ነው።"
+      },
+      {
+        id: 54,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "34. Hanan's monthly salary is 13,926 Birr. To qualify for an apartment, her monthly income must be at least three times the rent (r). What is the highest rent she qualifies for?",
+        options: ["(A) 4,120 Birr", "(B) 4,642 Birr", "(C) 4,820 Birr", "(D) 5,100 Birr"],
+        correct: "(B) 4,642 Birr",
+        explanationEn: "3r <= 13,926 => r <= 13,926 / 3 = 4,642 Birr.",
+        explanationAm: "3r <= 13,926 => r <= 13,926 / 3 = 4,642 ብር። መክፈል የምትችለው ከፍተኛ የቤት ኪራይ 4,642 ብር ነው።"
+      },
+      {
+        id: 55,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "35. Carnival Plan A charges 15 Birr entry plus 10 Birr per ride. Plan B charges 10 Birr entry plus 15 Birr per ride. For how many rides (n) is Plan A strictly cheaper than Plan B?",
+        options: ["(A) n = 1", "(B) n < 1", "(C) n > 1", "(D) No number of rides"],
+        correct: "(C) n > 1",
+        explanationEn: "Plan A < Plan B: 15 + 10n < 10 + 15n => 5 < 5n => n > 1 ride.",
+        explanationAm: "15 + 10n < 10 + 15n => 5 < 5n => n > 1። ከ 1 ጨዋታ በላይ ሲሆን ፕላን A ይረክሳል።"
+      },
+      {
+        id: 56,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "36. A 2.5-meter board is cut into two pieces such that one piece is 30 cm longer than the other. What is the length of the shorter piece?",
+        options: ["(A) 140 cm", "(B) 125 cm", "(C) 115 cm", "(D) 110 cm"],
+        correct: "(D) 110 cm",
+        explanationEn: "2.5 m = 250 cm. Let shorter = x, longer = x + 30. x + (x + 30) = 250 => 2x = 220 => x = 110 cm.",
+        explanationAm: "2.5 ሜትር = 250 ሳ.ሜ። x + (x + 30) = 250 => 2x = 220 => x = 110 ሳ.ሜ (አጭሩ ቁራጭ)።"
+      },
+      {
+        id: 57,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "37. Rodas is currently 25 years old and her brother Mathanya is 10 years old. In how many years (y) will Rodas be exactly twice as old as Mathanya?",
+        options: ["(A) 5 years", "(B) 7 years", "(C) 10 years", "(D) 15 years"],
+        correct: "(A) 5 years",
+        explanationEn: "25 + y = 2(10 + y) => 25 + y = 20 + 2y => y = 5 years.",
+        explanationAm: "25 + y = 2(10 + y) => 25 + y = 20 + 2y => y = 5 ዓመት። ከ 5 ዓመት በኋላ የሮዳስ ዕድሜ 30 የማትያስ 15 ይሆናል።"
+      },
+      {
+        id: 58,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "38. Yoseph plans a dinner party budgeted at at most 735 Birr. The fixed cost per person is 56.50 Birr. What is the maximum number of people that can attend?",
+        options: ["(A) 12 people", "(B) 13 people", "(C) 14 people", "(D) 15 people"],
+        correct: "(B) 13 people",
+        explanationEn: "56.50p <= 735 => p <= 735 / 56.50 ≈ 13.008. The maximum whole number of people is 13.",
+        explanationAm: "56.50p <= 735 => p <= 13.008። ሙሉ ሰው መሆን ስላለበት ቢበዛ 13 ሰዎች መጋበዝ ይችላሉ።"
+      },
+      {
+        id: 59,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "39. Which of the following points lies on the line defined by the equation x - 2y - 1 = 0?",
+        options: ["(A) (0, 0)", "(B) (2, 1)", "(C) (1, 0)", "(D) (-1, 1)"],
+        correct: "(C) (1, 0)",
+        explanationEn: "Substitute (1, 0): 1 - 2(0) - 1 = 1 - 0 - 1 = 0. Point (1, 0) satisfies the equation.",
+        explanationAm: "ነጥብ (1, 0) ስንተካ፡ 1 - 2(0) - 1 = 0 እውነት ስለሚሆን በመስመሩ ላይ ይገኛል።"
+      },
+      {
+        id: 60,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "40. What is the point of intersection between the two linear graphs y = x + 1 and y = 1 - x?",
+        options: ["(A) (1, 0)", "(B) (0, -1)", "(C) (-1, 0)", "(D) (0, 1)"],
+        correct: "(D) (0, 1)",
+        explanationEn: "Equate: x + 1 = 1 - x => 2x = 0 => x = 0. Substituting x = 0 gives y = 1. Intersection is (0, 1).",
+        explanationAm: "x + 1 = 1 - x => 2x = 0 => x = 0፤ x = 0 ሲሆን y = 1 ይሆናል። መገናኛ ነጥባቸው (0, 1) ነው።"
+      },
+      {
+        id: 61,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "41. If the points P(3, 1) and Q(0, 2) both lie on the line ax - by = 6, what are the values of a and b?",
+        options: ["(A) a = 1, b = -3", "(B) a = 3, b = 2", "(C) a = 2, b = -3", "(D) a = -3, b = 1"],
+        correct: "(A) a = 1, b = -3",
+        explanationEn: "From Q(0, 2): a(0) - b(2) = 6 => -2b = 6 => b = -3. From P(3, 1): 3a - (-3)(1) = 6 => 3a + 3 = 6 => 3a = 3 => a = 1.",
+        explanationAm: "በ Q(0, 2) መሰረት: -2b = 6 => b = -3፤ በ P(3, 1) መሰረት: 3a - (-3) = 6 => 3a = 3 => a = 1።"
+      },
+      {
+        id: 62,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "42. Solve the linear inequality in Q: (x / 7) >= (3x / 14) - (1 / 7).",
+        options: ["(A) x >= 2", "(B) x <= 2", "(C) x <= -2", "(D) x >= -2"],
+        correct: "(B) x <= 2",
+        explanationEn: "Multiply by 14: 2x >= 3x - 2 => -x >= -2 => x <= 2.",
+        explanationAm: "በ 14 ስናባዛ: 2x >= 3x - 2 => -x >= -2 => x <= 2 ይሆናል።"
+      },
+      {
+        id: 63,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "43. What is the solution set of the inequality x < 4(4 - x) restricted to the domain of positive integers Z+ = {1, 2, 3, ...}?",
+        options: ["(A) {1, 2, 3, 4}", "(B) {0, 1, 2, 3}", "(C) {1, 2, 3}", "(D) {1, 2}"],
+        correct: "(C) {1, 2, 3}",
+        explanationEn: "x < 16 - 4x => 5x < 16 => x < 3.2. Positive integers less than 3.2 are {1, 2, 3}.",
+        explanationAm: "x < 16 - 4x => 5x < 16 => x < 3.2። ከአዎንታዊ ሙሉ ቁጥሮች (Z+) ውስጥ የሚካተቱት {1, 2, 3} ናቸው።"
+      },
+      {
+        id: 64,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "44. If x >= 3, which of the following is an equivalent statement after multiplying both sides by -4?",
+        options: ["(A) -4x >= -12", "(B) -4x > -12", "(C) -4x < -12", "(D) -4x <= -12"],
+        correct: "(D) -4x <= -12",
+        explanationEn: "Multiplying by a negative number reverses the direction of the inequality: >= becomes <=.",
+        explanationAm: "በአሉታዊ ቁጥር (-4) ስናባዛ የምልክቱ አቅጣጫ ይቀለበሳል: >= ወደ <= ይቀየራል (-4x <= -12)።"
+      },
+      {
+        id: 65,
+        part: "PART IV: MULTIPLE-CHOICE QUESTIONS",
+        type: "mcq",
+        question: "45. In a class of 42 students, the number of girls (g) is 1.1 times the number of boys (b). How many boys are in the class?",
+        options: ["(A) 22", "(B) 20", "(C) 21", "(D) 19"],
+        correct: "(B) 20",
+        explanationEn: "b + 1.1b = 42 => 2.1b = 42 => b = 42 / 2.1 = 20 boys (and girls = 22).",
+        explanationAm: "የወንዶች ቁጥር b ቢሆን፡ b + 1.1b = 42 => 2.1b = 42 => b = 20 ወንዶች (ሴቶች 22) ይሆናሉ።"
+      }
+    ];
+
+    /* =========================================================================
+       2. APPLICATION STATE MANAGEMENT
+       ========================================================================= */
+    let currentIndex = 0;
+    let studentDetails = { name: "", id: "", section: "" };
+    let userAnswers = {}; // { qIndex: { chosen: "...", isCorrect: bool } }
+    let hasFinalSubmitted = false;
+    let isAudioMuted = false;
+    let timerInterval = null;
+    let totalSecondsRemaining = 90 * 60; // 90 minutes = 5400 seconds
+    const TEACHER_EMAIL = "mesayferedegn2@gmail.com";
+
+    /* =========================================================================
+       3. SPEECH SYNTHESIS: BRITISH ACCENT NARRATOR
+       ========================================================================= */
+    let britishVoice = null;
+
+    function initSpeech() {
+      if ('speechSynthesis' in window) {
+        const loadVoices = () => {
+          const voices = window.speechSynthesis.getVoices();
+          // Look for British English voices
+          britishVoice = voices.find(v => v.lang === 'en-GB' && (v.name.includes('Female') || v.name.includes('Hazel') || v.name.includes('Susan') || v.name.includes('George') || v.name.includes('Google UK English Female'))) 
+                         || voices.find(v => v.lang === 'en-GB')
+                         || voices.find(v => v.lang.startsWith('en'));
+        };
+        loadVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+          window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+      }
+    }
+    initSpeech();
+
+    function narrateText(text) {
+      if (isAudioMuted || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel(); // Stop ongoing speech
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (britishVoice) {
+        utterance.voice = britishVoice;
+      }
+      utterance.lang = 'en-GB';
+      utterance.rate = 0.95;
+      utterance.pitch = 1.05;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function narrateCurrentQuestion() {
+      const q = quizData[currentIndex];
+      const cleanQ = q.question.replace(/_{2,}/g, "blank space");
+      narrateText(`Question number ${q.id}. ${cleanQ}`);
+    }
+
+    function toggleAudioMute() {
+      isAudioMuted = !isAudioMuted;
+      const icon = document.getElementById('narratorIcon');
+      const label = document.getElementById('narratorLabel');
+      if (isAudioMuted) {
+        window.speechSynthesis.cancel();
+        icon.className = 'fa-solid fa-volume-xmark text-slate-400';
+        label.innerText = 'Narrator Muted';
+      } else {
+        icon.className = 'fa-solid fa-volume-high text-indigo-600';
+        label.innerText = 'British Narrator Active';
+        narrateCurrentQuestion();
+      }
+    }
+
+    /* =========================================================================
+       4. TIMER SYSTEM (90 MINUTES)
+       ========================================================================= */
+    function startTimer() {
+      const timerElement = document.getElementById('timer');
+      updateTimerDisplay(timerElement, totalSecondsRemaining);
+
+      timerInterval = setInterval(() => {
+        totalSecondsRemaining--;
+        if (totalSecondsRemaining <= 0) {
+          clearInterval(timerInterval);
+          totalSecondsRemaining = 0;
+          updateTimerDisplay(timerElement, 0);
+          showModal(
+            "fa-hourglass-end text-rose-500",
+            "Time Has Expired!",
+            "Your 90-minute examination duration has ended. The system will now auto-grade and finalize your answers.",
+            () => finalizeAssessment()
+          );
+        } else {
+          updateTimerDisplay(timerElement, totalSecondsRemaining);
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay(el, seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      el.innerText = `Time: ${m}m ${s < 10 ? '0' : ''}${s}s`;
+      if (seconds < 300) { // Under 5 minutes
+        el.style.color = '#dc2626';
+        el.className = 'bg-red-100 border border-red-300 rounded-lg text-sm sm:text-base font-bold animate-pulse';
+      }
+    }
+
+    /* =========================================================================
+       5. QUIZ INITIALIZATION & NAVIGATION
+       ========================================================================= */
+    function startAssessment(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById('fullName').value.trim();
+      const idInput = document.getElementById('studentId').value.trim();
+      const secInput = document.getElementById('section').value.trim();
+
+      if (!nameInput || !idInput || !secInput) {
+        showModal("fa-circle-exclamation text-amber-500", "Incomplete Details", "Please fill in all identification fields before starting.", null, false);
+        return;
+      }
+
+      studentDetails = { name: nameInput, id: idInput, section: secInput };
+      document.getElementById('studentDisplay').innerText = studentDetails.name;
+      document.getElementById('sectionDisplay').innerText = `ID: ${studentDetails.id} • ${studentDetails.section}`;
+
+      document.getElementById('introScreen').classList.add('hidden');
+      document.getElementById('quizScreen').classList.remove('hidden');
+
+      buildQuestionGrid();
+      startTimer();
+      renderQuestion(0);
+    }
+
+    function buildQuestionGrid() {
+      const grid = document.getElementById('questionGrid');
+      grid.innerHTML = '';
+      quizData.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.id = `grid-btn-${i}`;
+        btn.innerText = i + 1;
+        btn.className = `w-full py-1.5 text-xs font-semibold rounded-lg border transition border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100`;
+        btn.onclick = () => jumpToQuestion(i);
+        grid.appendChild(btn);
+      });
+    }
+
+    function updateGridButton(index) {
+      const btn = document.getElementById(`grid-btn-${index}`);
+      if (!btn) return;
+      const status = userAnswers[index];
+      if (status) {
+        if (status.isCorrect) {
+          btn.className = 'w-full py-1.5 text-xs font-bold rounded-lg border border-emerald-500 bg-emerald-500 text-white shadow-sm';
+        } else {
+          btn.className = 'w-full py-1.5 text-xs font-bold rounded-lg border border-rose-500 bg-rose-500 text-white shadow-sm';
+        }
+      } else if (index === currentIndex) {
+        btn.className = 'w-full py-1.5 text-xs font-bold rounded-lg border-2 border-indigo-600 bg-indigo-50 text-indigo-700';
+      } else {
+        btn.className = 'w-full py-1.5 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100';
+      }
+    }
+
+    function jumpToQuestion(index) {
+      renderQuestion(index);
+    }
+
+    function jumpToCategory(startIdx) {
+      renderQuestion(startIdx);
+    }
+
+    function navNext() {
+      if (currentIndex < quizData.length - 1) {
+        renderQuestion(currentIndex + 1);
+      }
+    }
+
+    function navPrev() {
+      if (currentIndex > 0) {
+        renderQuestion(currentIndex - 1);
+      }
+    }
+
+    /* =========================================================================
+       6. QUESTION RENDERING & IRREVERSIBLE INSTANT FEEDBACK
+       ========================================================================= */
+    function renderQuestion(index) {
+      const prevIdx = currentIndex;
+      currentIndex = index;
+      updateGridButton(prevIdx);
+      updateGridButton(currentIndex);
+
+      const q = quizData[index];
+
+      // Badges & Navigation Buttons state
+      document.getElementById('partBadge').innerText = q.part;
+      document.getElementById('questionNumBadge').innerText = `Question ${index + 1} of 65`;
+      document.getElementById('backBtn').disabled = (index === 0);
+      document.getElementById('skipBtn').disabled = (index === quizData.length - 1);
+
+      // Question Text
+      document.getElementById('questionText').innerHTML = q.question;
+
+      // Render Options Container
+      const container = document.getElementById('optionsContainer');
+      container.innerHTML = '';
+
+      const isLocked = userAnswers.hasOwnProperty(index);
+      const savedAnswer = userAnswers[index];
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left p-3.5 sm:p-4 rounded-xl border text-sm sm:text-base font-medium transition flex items-center justify-between group`;
+        
+        let labelIcon = '<i class="fa-regular fa-circle text-slate-300 group-hover:text-indigo-400"></i>';
+
+        if (isLocked) {
+          btn.disabled = true;
+          btn.classList.add('cursor-not-allowed');
+
+          if (opt === q.correct) {
+            // Correct Answer Highlight
+            btn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-950', 'font-bold');
+            labelIcon = '<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>';
+          } else if (savedAnswer && savedAnswer.chosen === opt && !savedAnswer.isCorrect) {
+            // Wrong Answer Highlight
+            btn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-950', 'font-bold');
+            labelIcon = '<i class="fa-solid fa-circle-xmark text-rose-500 text-lg"></i>';
+          } else {
+            // Inactive
+            btn.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-400', 'opacity-60');
+          }
+        } else {
+          // Unanswered Active
+          btn.classList.add('bg-white', 'border-slate-300', 'hover:border-indigo-400', 'hover:bg-indigo-50/40', 'text-slate-800');
+          btn.onclick = () => handleAnswerSelect(index, opt);
+        }
+
+        btn.innerHTML = `
+          <span class="flex-1 pr-2">${opt}</span>
+          <span class="ml-2 flex-shrink-0">${labelIcon}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      // Feedback Box Handling
+      const feedbackBox = document.getElementById('feedbackBox');
+      if (isLocked) {
+        feedbackBox.classList.remove('hidden');
+        const header = document.getElementById('feedbackHeader');
+        if (savedAnswer.isCorrect) {
+          feedbackBox.className = 'rounded-xl border border-emerald-300 bg-emerald-50/50 p-5 transition-all';
+          header.className = 'flex items-center gap-2 font-bold text-emerald-800';
+          header.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i> Excellent! That is mathematically correct.';
+        } else {
+          feedbackBox.className = 'rounded-xl border border-rose-300 bg-rose-50/50 p-5 transition-all';
+          header.className = 'flex items-center gap-2 font-bold text-rose-800';
+          header.innerHTML = '<i class="fa-solid fa-circle-exclamation text-rose-600 text-lg"></i> Incorrect Choice. See the accurate solution below:';
+        }
+        document.getElementById('correctAnswerText').innerText = q.correct;
+        document.getElementById('explanationEn').innerText = q.explanationEn;
+        document.getElementById('explanationAm').innerText = q.explanationAm;
+      } else {
+        feedbackBox.classList.add('hidden');
+      }
+
+      // British Narration upon question transition
+      narrateCurrentQuestion();
+    }
+
+    function handleAnswerSelect(qIndex, selectedOption) {
+      if (userAnswers.hasOwnProperty(qIndex)) return; // Prevent double trigger
+
+      const q = quizData[qIndex];
+      const isCorrect = (selectedOption === q.correct);
+
+      // Irreversible lock in user state
+      userAnswers[qIndex] = {
+        chosen: selectedOption,
+        isCorrect: isCorrect,
+        correct: q.correct
+      };
+
+      // Play immediate voice reinforcement
+      if (!isAudioMuted && 'speechSynthesis' in window) {
+        if (isCorrect) {
+          narrateText("Correct answer!");
+        } else {
+          narrateText("That is incorrect. The correct answer is " + q.correct);
+        }
+      }
+
+      // Update counters & progress
+      updateScoreboard();
+      updateGridButton(qIndex);
+
+      // Re-render question to activate irreversible locking and feedback visuals
+      renderQuestion(qIndex);
+    }
+
+    function updateScoreboard() {
+      const answeredKeys = Object.keys(userAnswers);
+      const totalAnswered = answeredKeys.length;
+      let totalCorrect = 0;
+      answeredKeys.forEach(k => {
+        if (userAnswers[k].isCorrect) totalCorrect++;
+      });
+
+      document.getElementById('currentScore').innerText = totalCorrect;
+      document.getElementById('answeredCount').innerText = totalAnswered;
+      const pct = Math.max(1.5, (totalAnswered / quizData.length) * 100);
+      document.getElementById('progressBar').style.width = `${pct}%`;
+    }
+
+    /* =========================================================================
+       7. SUBMISSION & RESULT GENERATION
+       ========================================================================= */
+    function trySubmitQuiz() {
+      if (hasFinalSubmitted) return;
+
+      const answeredCount = Object.keys(userAnswers).length;
+      const unAnswered = quizData.length - answeredCount;
+
+      if (unAnswered > 0) {
+        showModal(
+          "fa-triangle-exclamation text-amber-500",
+          "Unfinished Questions",
+          `You have ${unAnswered} unanswered question(s) remaining out of 65. Are you certain you want to finalize and auto-grade your assessment now? This cannot be undone.`,
+          () => finalizeAssessment(),
+          true
+        );
+      } else {
+        showModal(
+          "fa-circle-question text-indigo-600",
+          "Submit Assessment",
+          "Are you ready to submit your exam? All 65 responses will be scored and locked immediately.",
+          () => finalizeAssessment(),
+          true
+        );
+      }
+    }
+
+    function finalizeAssessment() {
+      if (hasFinalSubmitted) return;
+      hasFinalSubmitted = true;
+      clearInterval(timerInterval);
+      window.speechSynthesis.cancel();
+
+      // Grade breakdown
+      let scoreP1 = 0, scoreP2 = 0, scoreP3 = 0, scoreP4 = 0;
+      let totalScore = 0;
+
+      for (let i = 0; i < quizData.length; i++) {
+        const ans = userAnswers[i];
+        if (ans && ans.isCorrect) {
+          totalScore++;
+          if (i < 10) scoreP1++;
+          else if (i < 15) scoreP2++;
+          else if (i < 20) scoreP3++;
+          else scoreP4++;
+        }
+      }
+
+      const percentage = ((totalScore / 65) * 100).toFixed(1);
+
+      // Update Result UI
+      document.getElementById('resFullName').innerText = studentDetails.name;
+      document.getElementById('resStudentMeta').innerText = `${studentDetails.id} (${studentDetails.section})`;
+      document.getElementById('resScore').innerText = totalScore;
+      document.getElementById('resPercentage').innerText = `${percentage}%`;
+
+      document.getElementById('breakdownP1').innerText = `${scoreP1} / 10`;
+      document.getElementById('breakdownP2').innerText = `${scoreP2} / 5`;
+      document.getElementById('breakdownP3').innerText = `${scoreP3} / 5`;
+      document.getElementById('breakdownP4').innerText = `${scoreP4} / 45`;
+
+      // Build hidden report buffer for easy clipboard & mailto
+      buildAssessmentReport(totalScore, percentage, scoreP1, scoreP2, scoreP3, scoreP4);
+
+      // Populate Audit Log
+      populateAuditLog();
+
+      // Switch screens
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('resultScreen').classList.remove('hidden');
+
+      // Voice congratulatory message
+      narrateText(`Assessment completed. ${studentDetails.name}, you scored ${totalScore} out of 65, which is ${percentage} percent.`);
+    }
+
+    function buildAssessmentReport(total, pct, p1, p2, p3, p4) {
+      const timeUsed = formatTimeUsed(90 * 60 - totalSecondsRemaining);
+      const textReport = `=====================================================
+GRADE 8 MATHEMATICS UNIT 3 OFFICIAL EXAMINATION REPORT
+=====================================================
+Student Name : ${studentDetails.name}
+Student ID   : ${studentDetails.id}
+Grade/Section: ${studentDetails.section}
+Submission Dt: ${new Date().toLocaleString()}
+Time Taken   : ${timeUsed}
+-----------------------------------------------------
+FINAL SCORE  : ${total} / 65 (${pct}%)
+Part I (Blanks)    : ${p1} / 10
+Part II (True/False): ${p2} / 5
+Part III (Odd-Out)  : ${p3} / 5
+Part IV (MCQ 1-45)  : ${p4} / 45
+-----------------------------------------------------
+Assessment Status: LOCKED & VERIFIED
+Teacher Recipient: ${TEACHER_EMAIL}
+=====================================================`;
+      document.getElementById('hiddenReportBuffer').value = textReport;
+    }
+
+    function formatTimeUsed(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m}m ${s}s`;
+    }
+
+    /* =========================================================================
+       8. EMAIL DISPATCH & SINGLE SUBMISSION RESTRICTION
+       ========================================================================= */
+    let emailSentOnce = false;
+
+    function sendScoreEmail() {
+      const sendBtn = document.getElementById('sendEmailBtn');
+      const lockNotice = document.getElementById('emailLockedNotice');
+
+      if (emailSentOnce) {
+        showModal(
+          "fa-lock text-amber-500",
+          "Already Submitted",
+          "You have already submitted your score report via email. Duplicate submissions are strictly restricted.",
+          null,
+          false
+        );
+        return;
+      }
+
+      const reportContent = document.getElementById('hiddenReportBuffer').value;
+      const subject = encodeURIComponent(`Assessment Score: ${studentDetails.name} (${studentDetails.id}) - Unit 3 Grade 8 Math`);
+      const body = encodeURIComponent(reportContent);
+
+      const mailtoUrl = `mailto:${TEACHER_EMAIL}?subject=${subject}&body=${body}`;
+
+      // Open email client
+      window.location.href = mailtoUrl;
+
+      // Lock button to prevent resubmission
+      emailSentOnce = true;
+      sendBtn.disabled = true;
+      sendBtn.className = 'flex-1 min-w-[220px] py-3.5 px-6 rounded-xl bg-slate-400 text-white font-bold text-sm cursor-not-allowed opacity-80';
+      sendBtn.innerHTML = '<i class="fa-solid fa-check"></i> Score Dispatched to Teacher';
+      lockNotice.classList.remove('hidden');
+
+      showModal(
+        "fa-paper-plane text-emerald-600",
+        "Email Client Launched",
+        `Your official score report has been prepared for ${TEACHER_EMAIL}. Please verify and send the prefilled email from your mail client.`,
+        null,
+        false
+      );
+    }
+
+    function copyResultsSummary() {
+      const buffer = document.getElementById('hiddenReportBuffer');
+      buffer.select();
+      buffer.setSelectionRange(0, 99999);
+      try {
+        document.execCommand('copy');
+        const copyLabel = document.getElementById('copyBtnText');
+        copyLabel.innerText = 'Copied to Clipboard!';
+        setTimeout(() => { copyLabel.innerText = 'Copy Report'; }, 2500);
+      } catch (err) {
+        showModal("fa-triangle-exclamation text-amber-500", "Copy Error", "Please manually select and copy the score text.", null, false);
+      }
+    }
+
+    function populateAuditLog() {
+      const container = document.getElementById('auditLogContainer');
+      container.innerHTML = '';
+
+      quizData.forEach((q, idx) => {
+        const userRes = userAnswers[idx];
+        const isCorrect = userRes ? userRes.isCorrect : false;
+        const chosen = userRes ? userRes.chosen : "No Answer (Skipped)";
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = `p-4 rounded-xl border text-xs sm:text-sm ${
+          isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'
+        }`;
+
+        itemDiv.innerHTML = `
+          <div class="flex items-start justify-between gap-2 mb-1.5">
+            <span class="font-bold text-slate-900">${q.id}. ${q.question}</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+              isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+            }">
+              ${isCorrect ? 'CORRECT' : 'INCORRECT'}
+            </span>
+          </div>
+          <div class="space-y-1 text-slate-700">
+            <div><strong class="text-slate-500">Your Response:</strong> <span class="${isCorrect ? 'text-emerald-700 font-semibold' : 'text-rose-700 font-semibold'}">${chosen}</span></div>
+            <div><strong class="text-slate-500">Official Key:</strong> <span class="text-slate-900 font-bold">${q.correct}</span></div>
+            <div class="mt-2 pt-2 border-t border-slate-200/60 text-slate-600">
+              <span class="font-semibold text-indigo-700">EN:</span> ${q.explanationEn}<br>
+              <span class="font-semibold text-amber-800">AM:</span> ${q.explanationAm}
+            </div>
+          </div>
+        `;
+        container.appendChild(itemDiv);
+      });
+    }
+
+    function toggleAuditLog() {
+      const log = document.getElementById('auditLogContainer');
+      const label = document.getElementById('auditToggleLabel');
+      if (log.classList.contains('hidden')) {
+        log.classList.remove('hidden');
+        label.innerText = 'Hide Full 65-Item Audit Log';
+      } else {
+        log.classList.add('hidden');
+        label.innerText = 'View Full 65-Item Audit Log & Detailed Solutions';
+      }
+    }
+
+    /* =========================================================================
+       9. ACCESSIBLE CUSTOM MODAL DIALOG
+       ========================================================================= */
+    let currentModalConfirmCallback = null;
+
+    function showModal(iconClass, title, message, onConfirm = null, showCancel = true) {
+      const modal = document.getElementById('customModal');
+      const icon = document.getElementById('modalIcon');
+      const t = document.getElementById('modalTitle');
+      const m = document.getElementById('modalMessage');
+      const secBtn = document.getElementById('modalSecondaryBtn');
+      const primBtn = document.getElementById('modalPrimaryBtn');
+
+      icon.className = `fa-solid ${iconClass}`;
+      t.innerText = title;
+      m.innerText = message;
+
+      if (showCancel) {
+        secBtn.classList.remove('hidden');
+      } else {
+        secBtn.classList.add('hidden');
+      }
+
+      currentModalConfirmCallback = onConfirm;
+
+      primBtn.onclick = () => {
+        closeModal();
+        if (typeof currentModalConfirmCallback === 'function') {
+          currentModalConfirmCallback();
+        }
+      };
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('customModal').classList.add('hidden');
+      currentModalConfirmCallback = null;
+    }
+  </script>
+</body>
+</html>
